@@ -1,7 +1,12 @@
 package it.unibo.oop.lab.collections2;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 
@@ -29,6 +34,7 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * 
      * think of what type of keys and values would best suit the requirements
      */
+	Map<String, Set<U>> friends = new HashMap<>();
 
     /*
      * [CONSTRUCTORS]
@@ -57,6 +63,10 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
     }
+    
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user, -1);
+    }
 
     /*
      * [METHODS]
@@ -66,17 +76,35 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
+//    	if(!this.friends.containsValue(user)) {
+//    		return true;
+//    	}
+    	if(!this.friends.containsKey(circle)) { //Create the group if it doesn't exist yet
+    		this.friends.put(circle, new HashSet <>());
+    	}
+    	this.friends.get(circle).add(user); //Add the user at the group
         return false;
     }
 
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+    	Collection <U> followedUsersGroup = new ArrayList <>();
+    	for(String group : this.friends.keySet()) { //For each group in friends map
+        	if(group == groupName) {
+        		followedUsersGroup.addAll(this.friends.get(group));//Add the list of friends of the group equal to groupName
+        		break;
+        	}
+        }
+        return followedUsersGroup;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        List <U> followedUsers = new ArrayList <>();
+        for(String group : this.friends.keySet()) { //For each group in friends map
+        	followedUsers.addAll(this.friends.get(group)); //Add the list of friends of current group
+        }
+        return followedUsers;
     }
 
 }
