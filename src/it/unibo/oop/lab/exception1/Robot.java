@@ -34,14 +34,8 @@ public class Robot {
      * 
      * @return If the Up movement has been performed
      */
-    public boolean moveUp() {
-    	try {
-    		moveToPosition(environment.getCurrPosX(), this.environment.getCurrPosY() + Robot.MOVEMENT_DELTA);
-    	}catch(PositionOutOfBoundException | NotEnoughBatteryException ex) {
-    		System.out.println(ex.getMessage());
-    		return false;
-    	}
-    	return true;
+    public void moveUp() {
+        this.moveToPosition(environment.getCurrPosX(), this.environment.getCurrPosY() + Robot.MOVEMENT_DELTA);    	
     }
 
     /**
@@ -49,15 +43,8 @@ public class Robot {
      * 
      * @return If the Down movement has been performed
      */
-    public boolean moveDown() {
-    	try {
-    		this.moveToPosition(this.environment.getCurrPosX(), environment.getCurrPosY() - Robot.MOVEMENT_DELTA);
-    	}catch(PositionOutOfBoundException | NotEnoughBatteryException ex) {
-    		System.out.println(ex.getMessage());
-    		return false;
-    	}
-    	return true;
-        //return this.moveToPosition(this.environment.getCurrPosX(), environment.getCurrPosY() - Robot.MOVEMENT_DELTA);
+    public void moveDown() {
+        this.moveToPosition(this.environment.getCurrPosX(), environment.getCurrPosY() - Robot.MOVEMENT_DELTA);
     }
 
     /**
@@ -65,17 +52,8 @@ public class Robot {
      * 
      * @return A boolean indicating if the Left movement has been performed
      */
-    public boolean moveLeft() {
-    	try {
-    		this.moveToPosition(this.environment.getCurrPosX() - Robot.MOVEMENT_DELTA,
-                    this.environment.getCurrPosY());
-    	}catch(PositionOutOfBoundException | NotEnoughBatteryException ex) {
-    		System.out.println(ex.getMessage());
-    		return false;
-    	}
-    	return true;
-        //return this.moveToPosition(this.environment.getCurrPosX() - Robot.MOVEMENT_DELTA,
-       //         this.environment.getCurrPosY());
+    public void moveLeft() {
+        this.moveToPosition(this.environment.getCurrPosX() - Robot.MOVEMENT_DELTA, this.environment.getCurrPosY());
     }
 
     /**
@@ -83,17 +61,8 @@ public class Robot {
      * 
      * @return A boolean indicating if the Right movement has been performed
      */
-    public boolean moveRight() {
-    	try {
-    	    this.moveToPosition(this.environment.getCurrPosX() + Robot.MOVEMENT_DELTA,
-                    this.environment.getCurrPosY());
-    	}catch(PositionOutOfBoundException | NotEnoughBatteryException ex) {
-    		System.out.println(ex.getMessage());
-    		return false;
-    	}
-    	return true;
-        //return this.moveToPosition(this.environment.getCurrPosX() + Robot.MOVEMENT_DELTA,
-         //       this.environment.getCurrPosY());
+    public void moveRight() {
+       this.moveToPosition(this.environment.getCurrPosX() + Robot.MOVEMENT_DELTA, this.environment.getCurrPosY());
     }
 
     /**
@@ -112,7 +81,7 @@ public class Robot {
      *            the new Y position to move the robot to
      * @return true if robot gets moved, false otherwise
      */
-    private void moveToPosition(final int newX, final int newY) throws NotEnoughBatteryException, PositionOutOfBoundException {
+    private void moveToPosition(final int newX, final int newY){
     	if(!this.isBatteryEnoughToMove()) {
     		throw new NotEnoughBatteryException(this.getBatteryLevel());
     	}
