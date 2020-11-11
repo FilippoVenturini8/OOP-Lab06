@@ -1,8 +1,10 @@
 package it.unibo.oop.lab.collections1;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Example class using {@link java.util.List} and {@link java.util.Map}.
@@ -18,7 +20,8 @@ public final class UseCollection {
      *            unused
      */
     public static void main(final String... s) {
-    	final int ELEMS = 1_000_000;
+    	final int ELEMS_TO_WRITE = 100_000;
+    	final int ELEMS_TO_READ = 1000;
     	final int TO_MS = 1_000_000;
         /*
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
@@ -69,6 +72,13 @@ public final class UseCollection {
         /*
          * 8) Compute the population of the world
          */
+    	final long AFRICA_POPULATION = 1_110_635_000L;
+    	final long AMERICAS_POPULATION = 972_005_000L;
+        final long ANTARCTICA_POPULATION = 0L;
+        final long ASIA_POPULATION = 4_298_723_000L;
+        final long EUROPE_POPULATION = 742_452_000L;
+        final long OCEANIA_POPULATION = 38_304_000L;
+        
     	List <Integer> arrayList = new ArrayList <>();
     	for(int i = 1000; i < 2000; i++) {
     		arrayList.add(i);
@@ -83,6 +93,64 @@ public final class UseCollection {
     	for(Integer i : arrayList) {
     		System.out.println(i);
     	}
-
+    	
+    	//Measuring time for insert elements in arrayList
+    	long time = System.nanoTime();
+        for (int i = 0; i < ELEMS_TO_WRITE; i++) {
+        	arrayList.add(0, i);
+        }
+        time = System.nanoTime() - time;
+        System.out.println(
+            "Inserting " + ELEMS_TO_WRITE + " elements as first in an ArrayList took "
+            + time + " NS | " + time / TO_MS + " MS "
+        );
+        
+      //Measuring time for insert elements in LinkedList
+    	time = System.nanoTime();
+        for (int i = 0; i < ELEMS_TO_WRITE; i++) {
+        	linkedList.add(0, i);
+        }
+        time = System.nanoTime() - time;
+        System.out.println(
+            "Inserting " + ELEMS_TO_WRITE + " elements as first in an LinkedList took "
+            + time + " NS | " + time / TO_MS + " MS "
+        );
+        
+      //Measuring time for read elements in arrayList
+    	time = System.nanoTime();
+        for (int i = 0; i < ELEMS_TO_READ; i++) {
+        	arrayList.get(linkedList.size()/2);
+        }
+        time = System.nanoTime() - time;
+        System.out.println(
+            "Reading " + ELEMS_TO_READ + " times element in the middle of arrayList took "
+            + time + " NS | " + time / TO_MS + " MS "
+        );
+        
+      //Measuring time for read elements in LinkedList
+    	time = System.nanoTime();
+        for (int i = 0; i < ELEMS_TO_READ; i++) {
+        	linkedList.get(linkedList.size()/2);
+        }
+        time = System.nanoTime() - time;
+        System.out.println(
+            "Reading " + ELEMS_TO_READ + " times element in the middle of LinkedList took "
+            + time + " NS | " + time / TO_MS + " MS "
+        );
+        
+        Map<String, Long> world = new HashMap <>();
+        world.put("Africa", AFRICA_POPULATION);
+        world.put("Americas", AMERICAS_POPULATION);
+        world.put("Antartica", ANTARCTICA_POPULATION);
+        world.put("Asia", ASIA_POPULATION);
+        world.put("Europe", EUROPE_POPULATION);
+        world.put("Oceania", OCEANIA_POPULATION);
+        
+        Long worldPopulation = 0L;
+        for(String name : world.keySet()) {
+        	worldPopulation += world.get(name);
+        }
+        
+        System.out.println("World population: " + worldPopulation);
     }
 }
