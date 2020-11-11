@@ -1,5 +1,9 @@
 package it.unibo.oop.lab.collections1;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * Example class using {@link java.util.List} and {@link java.util.Map}.
  * 
@@ -14,6 +18,8 @@ public final class UseCollection {
      *            unused
      */
     public static void main(final String... s) {
+    	final int ELEMS = 1_000_000;
+    	final int TO_MS = 1_000_000;
         /*
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
@@ -63,5 +69,20 @@ public final class UseCollection {
         /*
          * 8) Compute the population of the world
          */
+    	List <Integer> arrayList = new ArrayList <>();
+    	for(int i = 1000; i < 2000; i++) {
+    		arrayList.add(i);
+    	}
+    	
+    	List <Integer> linkedList = new LinkedList <>(arrayList);
+    	
+    	Integer tmp = arrayList.get(arrayList.size() - 1); //Save the last element
+    	arrayList.set(arrayList.size() - 1, arrayList.get(0)); //Add the first element to the last position
+    	arrayList.set(0, tmp); //Add the last element to the first position
+    	
+    	for(Integer i : arrayList) {
+    		System.out.println(i);
+    	}
+
     }
 }
